@@ -284,20 +284,26 @@ public class lab1java extends javax.swing.JFrame {
             // Получение количества строк и столбцов таблицы
             int rowCount = model.getRowCount();
             //int columnCount = model.getColumnCount();
-                       
-            model.insertRow(rowCount, new Object[]{
+            // Очищение текстовых полей
+            jTextField1.setText("");  
+            jTextField2.setText(""); 
+            jTextField3.setText("");
+            try{
+                RecIntegral row = new RecIntegral(lowerLimit, upperLimit, step, result);
+                    
+                model.insertRow(rowCount, new Object[]{
                     lowerLimit,
                     upperLimit,
                     step,
                     result
-            });
-            
-            RecIntegral row = new RecIntegral(lowerLimit, upperLimit, step, result);
-            list.add(row);
-            // Очищение текстовых полей
-            jTextField1.setText("");  
-            jTextField2.setText(""); 
-            jTextField3.setText("");  
+                });
+                
+                list.add(row); 
+            }
+            catch (InvalidNumberException e) {
+                // Обработка исключения: показываем диалоговое окно с предупреждением
+                JOptionPane.showMessageDialog(lab1java.this, "Ошибка: " + e.getMessage(), "Некорректные данные", JOptionPane.WARNING_MESSAGE);
+            }              
         }
         else{
             JOptionPane.showMessageDialog(lab1java.this, "Заполните пустые поля!");
@@ -314,7 +320,7 @@ public class lab1java extends javax.swing.JFrame {
         
         int selectedRow = jTable1.getSelectedRow();
         //удаляем выбранную строку из таблицы
-        model.removeRow(selectedRow);
+        model.removeRow(jTable1.getSelectedRow());
         //удаляем выбранную строку из списка
         list.remove(selectedRow);
   
@@ -333,7 +339,7 @@ public class lab1java extends javax.swing.JFrame {
         double lowerLimit = Double.parseDouble(s_lowerLimit);
         double upperLimit = Double.parseDouble(s_upperLimit);
         double step = Double.parseDouble(s_step);
-            
+           
         double res = 0;
         double x = lowerLimit;
 
@@ -342,10 +348,15 @@ public class lab1java extends javax.swing.JFrame {
             res += (Math.sin(x) + Math.sin(nextX)) * (nextX - x) / 2;
             x = nextX; 
         }
-        
-        model.setValueAt(res, currentRow, 3); 
-        RecIntegral updatedRec = new RecIntegral(s_lowerLimit, s_upperLimit, s_step, Double.toString(res));
-        list.set(currentRow, updatedRec);        
+        try{
+            RecIntegral updatedRec = new RecIntegral(s_lowerLimit, s_upperLimit, s_step, Double.toString(res));
+            model.setValueAt(res, currentRow, 3);
+            list.set(currentRow, updatedRec); 
+        }
+        catch (InvalidNumberException e) {
+            JOptionPane.showMessageDialog(lab1java.this, "Ошибка: " + e.getMessage(), "Некорректные данные", JOptionPane.WARNING_MESSAGE);
+        }
+               
     }//GEN-LAST:event_jButton3ActionPerformed
     
     // функция пока что не нужна вроде бы
@@ -363,7 +374,7 @@ public class lab1java extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        // Заполняем всю таблицу
+
 //        for (RecIntegral retu: list){
 //            model.addRow(retu.ret());
 //        }
