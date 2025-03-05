@@ -18,8 +18,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.SwingConstants;
 import java.awt.Dimension;
 
+
 import java.util.LinkedList;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+//import java.io.File;
+//import java.io.BufferedReader;
+
+import java.io.*;
 
 public class lab1java extends javax.swing.JFrame {
 
@@ -70,6 +77,10 @@ public class lab1java extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Вычисление определенного интеграла");
@@ -191,6 +202,46 @@ public class lab1java extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setBackground(new java.awt.Color(255, 204, 204));
+        jButton6.setFont(new java.awt.Font("SimSun", 0, 12)); // NOI18N
+        jButton6.setText("<html>загрузить<br>текстовый<br>файл</html>");
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setBackground(new java.awt.Color(255, 204, 204));
+        jButton7.setFont(new java.awt.Font("SimSun", 0, 12)); // NOI18N
+        jButton7.setText("<html>загрузить<br>бинарный<br>файл</html>");
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setBackground(new java.awt.Color(255, 204, 204));
+        jButton8.setFont(new java.awt.Font("SimSun", 0, 12)); // NOI18N
+        jButton8.setText("<html>сохранить в<br>текстовый<br>файл</html>");
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setBackground(new java.awt.Color(255, 204, 204));
+        jButton9.setFont(new java.awt.Font("SimSun", 0, 12)); // NOI18N
+        jButton9.setText("<html>сохранить в<br>бинарный<br>файл</html>");
+        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,11 +249,6 @@ public class lab1java extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -217,46 +263,73 @@ public class lab1java extends javax.swing.JFrame {
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(70, 70, 70)
-                                .addComponent(jLabel3)))
-                        .addContainerGap(86, Short.MAX_VALUE))
+                                .addComponent(jLabel3))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27))))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9)
+                    .addComponent(jButton7)
+                    .addComponent(jButton6))
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton5)
-                            .addComponent(jButton4)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(12, 12, 12)
-                        .addComponent(jButton2)
+                            .addComponent(jButton4))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jButton1)))
                         .addGap(14, 14, 14)
-                        .addComponent(jButton3)
-                        .addGap(68, 68, 68)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(jButton2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20))))))
         );
 
         pack();
@@ -343,7 +416,7 @@ public class lab1java extends javax.swing.JFrame {
         double res = 0;
         double x = lowerLimit;
 
-        while (x < upperLimit) {
+        while (x < upperLimit){
             double nextX = Math.min(x + step, upperLimit);              // Последний отрезок может быть меньше шага
             res += (Math.sin(x) + Math.sin(nextX)) * (nextX - x) / 2;
             x = nextX; 
@@ -353,7 +426,7 @@ public class lab1java extends javax.swing.JFrame {
             model.setValueAt(res, currentRow, 3);
             list.set(currentRow, updatedRec); 
         }
-        catch (InvalidNumberException e) {
+        catch (InvalidNumberException e){
             JOptionPane.showMessageDialog(lab1java.this, "Ошибка: " + e.getMessage(), "Некорректные данные", JOptionPane.WARNING_MESSAGE);
         }
                
@@ -383,6 +456,118 @@ public class lab1java extends javax.swing.JFrame {
             model.addRow(list.get(i).ret());
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        // ЗАГРУЗКА ТЕКСТОВОГО ФАЙЛА
+        JFileChooser openDialog = new JFileChooser();
+        openDialog.setDialogTitle("Открыть текстовый файл");
+        // сделали фильтр, чтобы только txt файлы можно было открыть
+        openDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+        // если нажали open в диалоговом окне
+        if (openDialog.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            File file = openDialog.getSelectedFile();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+                // очищаем список и таблицу перед заполнением 
+                list.clear();
+                model.setRowCount(0);
+                String line;
+                while ((line = reader.readLine()) != null){
+                    String[] parts = line.split(" ");  // разделитель - пробел
+                                
+                    // создаем объект RecIntegral и добавляем в список
+                    try{
+                        String result = (parts.length > 3) ? parts[3] : "";
+                        RecIntegral rec = new RecIntegral(parts[0], parts[1], parts[2], result);
+                        list.add(rec);
+
+                        // Добавляем строку в таблицу
+                        model.addRow(new String[]{parts[0], parts[1], parts[2], result});
+                    }
+                    catch (InvalidNumberException e){
+                        JOptionPane.showMessageDialog(this, "Ошибка: " + e.getMessage(), "Ошибка", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Файл успешно загружен!", "Загрузка", JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (IOException ex){
+                javax.swing.JOptionPane.showMessageDialog(this, "Ошибка при загрузке файла: " + ex.getMessage(), "Ошибка", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        // ЗАГРУЗКА БИНАРНОГО ФАЙЛА
+        JFileChooser openDialog = new JFileChooser();
+        openDialog.setDialogTitle("Открыть бинарный файл");
+        openDialog.setFileFilter(new FileNameExtensionFilter("Бинарный файл", "bin"));
+
+        if (openDialog.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = openDialog.getSelectedFile();
+
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                // Считываем список из файла
+                list = (LinkedList<RecIntegral>) ois.readObject();
+                
+                model.setRowCount(0);  // очищаем таблицу
+
+                for (RecIntegral rec : list) {
+                model.addRow(rec.ret());
+                }
+                JOptionPane.showMessageDialog(this, "Файл успешно загружен!", "Загрузка", JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (IOException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Ошибка при загрузке файла: " + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        // СОХРАНЕНИЕ ТЕКСТОВОГО ФАЙЛА
+        JFileChooser openDialog = new JFileChooser();
+        openDialog.setDialogTitle("Сохранить как текстовый файл");
+        // сделали фильтр, чтобы только txt файлы можно было открыть
+        openDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+        //int result = openDialog.showOpenDialog(this);
+        // если нажали open в диалоговом окне
+        if (openDialog.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            File file = openDialog.getSelectedFile();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
+                for (RecIntegral rec : list){
+                    // Сохраняем каждую строку, разделяя элементы пробелами
+                    writer.write(rec.ret()[0] + " " + rec.ret()[1] + " " + rec.ret()[2] + " " + rec.ret()[3]);
+                    writer.newLine(); // добавляем перевод строки
+                }
+                JOptionPane.showMessageDialog(this, "Файл успешно сохранен!", "Сохранение", JOptionPane.INFORMATION_MESSAGE);   
+            } 
+            catch (IOException ex){
+                javax.swing.JOptionPane.showMessageDialog(this, "Ошибка при сохранении файла: " + ex.getMessage(), "Ошибка", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        // СОХРАНЕНИЕ БИНАРНОГО ФАЙЛА
+        JFileChooser openDialog = new JFileChooser();
+        openDialog.setDialogTitle("Сохранить как бинарный файл");
+        openDialog.setFileFilter(new FileNameExtensionFilter("Бинарный файл", "bin"));
+
+        if (openDialog.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
+            File file = openDialog.getSelectedFile();
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+                // Сериализуем весь список сразу
+                oos.writeObject(list);
+                JOptionPane.showMessageDialog(this, "Файл успешно сохранен!", "Сохранение", JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (IOException ex){
+                JOptionPane.showMessageDialog(this, "Ошибка при сохранении файла: " + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -426,6 +611,10 @@ public class lab1java extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

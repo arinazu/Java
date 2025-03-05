@@ -4,13 +4,15 @@
  */
 package my.lab1java;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Вика
  */
-public class RecIntegral {
+public class RecIntegral implements Serializable{
     private String lower_limit;
-    private String upperLimit;
+    private String upper_limit;
     private String step;
     private String result;
     
@@ -27,12 +29,12 @@ public class RecIntegral {
         }
                
         this.lower_limit = lower_limit;
-        this.upperLimit = upperLimit;
+        this.upper_limit = upperLimit;
         this.step = step;
         this.result = result;
     }
     public String[] ret()
     {
-        return new String[]{lower_limit,upperLimit,step,result };
+        return new String[]{lower_limit,upper_limit,step,result };
     }
 }
