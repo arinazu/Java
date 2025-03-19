@@ -81,6 +81,7 @@ public class lab1java extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Вычисление определенного интеграла");
@@ -242,6 +243,8 @@ public class lab1java extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("5");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -282,13 +285,19 @@ public class lab1java extends javax.swing.JFrame {
                     .addComponent(jButton7)
                     .addComponent(jButton6))
                 .addGap(27, 27, 27))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
@@ -412,24 +421,41 @@ public class lab1java extends javax.swing.JFrame {
         double lowerLimit = Double.parseDouble(s_lowerLimit);
         double upperLimit = Double.parseDouble(s_upperLimit);
         double step = Double.parseDouble(s_step);
-           
-        double res = 0;
-        double x = lowerLimit;
+                  
+        double half = ((upperLimit - lowerLimit)/2) + lowerLimit;
+        System.out.println("half = " + half);
 
-        while (x < upperLimit){
-            double nextX = Math.min(x + step, upperLimit);              // Последний отрезок может быть меньше шага
-            res += (Math.sin(x) + Math.sin(nextX)) * (nextX - x) / 2;
-            x = nextX; 
+        MyThread thread1 = new MyThread("Thread1", lowerLimit, half, step);
+        MyThread thread2 = new MyThread("Thread2", half, upperLimit, step);
+        thread1.start(); // Запуск первого потока
+        thread2.start(); // Запуск второго потока
+        
+        try {
+            thread1.join(); // Ожидание завершения первого потока
+            thread2.join(); // Ожидание завершения второго потока
+        } 
+        catch (InterruptedException ex) {
+            System.out.println("Главный поток был прерван во время ожидания потоков!");
+            Thread.currentThread().interrupt();
         }
+        
+        double result1 = thread1.getResult(); // Получаем результат
+        System.out.println("Result of Thr1: " + result1);
+        
+        double result2 = thread2.getResult(); // Получаем результат
+        System.out.println("Result of Thr2: " + result2);
+        
+        double summa = result1 + result2;
+        System.out.println("Result of Threads: " + summa);
+        
         try{
-            RecIntegral updatedRec = new RecIntegral(s_lowerLimit, s_upperLimit, s_step, Double.toString(res));
-            model.setValueAt(res, currentRow, 3);
+            RecIntegral updatedRec = new RecIntegral(s_lowerLimit, s_upperLimit, s_step, Double.toString(summa));
+            model.setValueAt(summa, currentRow, 3);
             list.set(currentRow, updatedRec); 
         }
         catch (InvalidNumberException e){
             JOptionPane.showMessageDialog(lab1java.this, "Ошибка: " + e.getMessage(), "Некорректные данные", JOptionPane.WARNING_MESSAGE);
-        }
-               
+        }        
     }//GEN-LAST:event_jButton3ActionPerformed
     
     // функция пока что не нужна вроде бы
@@ -618,6 +644,7 @@ public class lab1java extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
