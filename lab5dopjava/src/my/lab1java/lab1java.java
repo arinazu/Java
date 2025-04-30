@@ -26,10 +26,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 //import java.io.File;
 //import java.io.BufferedReader;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class lab1java extends javax.swing.JFrame {
 
@@ -84,8 +86,6 @@ public class lab1java extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Вычисление определенного интеграла");
@@ -247,75 +247,45 @@ public class lab1java extends javax.swing.JFrame {
             }
         });
 
-        jButton10.setBackground(new java.awt.Color(255, 204, 204));
-        jButton10.setFont(new java.awt.Font("SimSun", 0, 12)); // NOI18N
-        jButton10.setActionCommand("<html>сохранить как<br>текстовый<br>файл</html>");
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton10.setLabel("<html>сохранить<br>как JSON файл</html>");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        jButton11.setBackground(new java.awt.Color(255, 204, 204));
-        jButton11.setFont(new java.awt.Font("SimSun", 0, 12)); // NOI18N
-        jButton11.setActionCommand("<html>сохранить как<br>текстовый<br>файл</html>");
-        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton11.setLabel("<html>загрузить<br>JSON файл</html>");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField1))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField2))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField2))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(42, 42, 42)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(70, 70, 70)
-                                        .addComponent(jLabel3))))
+                                .addGap(42, 42, 42)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9)
-                            .addComponent(jButton7)
-                            .addComponent(jButton6))))
+                                .addGap(70, 70, 70)
+                                .addComponent(jLabel3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9)
+                    .addComponent(jButton7)
+                    .addComponent(jButton6))
                 .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
@@ -343,27 +313,28 @@ public class lab1java extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton5)
-                            .addComponent(jButton4)))
+                            .addComponent(jButton4))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(13, 13, 13)
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jButton1)))
+                        .addGap(14, 14, 14)
+                        .addComponent(jButton2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20))))))
         );
 
         pack();
@@ -446,24 +417,46 @@ public class lab1java extends javax.swing.JFrame {
         double lowerLimit = Double.parseDouble(s_lowerLimit);
         double upperLimit = Double.parseDouble(s_upperLimit);
         double step = Double.parseDouble(s_step);
-           
-        double res = 0;
-        double x = lowerLimit;
+                  
+        double half = ((upperLimit - lowerLimit)/2) + lowerLimit;
+        System.out.println("half = " + half);
 
-        while (x < upperLimit){
-            double nextX = Math.min(x + step, upperLimit);              // Последний отрезок может быть меньше шага
-            res += (Math.sin(x) + Math.sin(nextX)) * (nextX - x) / 2;
-            x = nextX; 
-        }
-        try{
-            RecIntegral updatedRec = new RecIntegral(s_lowerLimit, s_upperLimit, s_step, Double.toString(res));
-            model.setValueAt(res, currentRow, 3);
-            list.set(currentRow, updatedRec); 
-        }
-        catch (InvalidNumberException e){
+        // Создаем пул нитей. ExecutorService управляет пулом нитей. 
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+         // Создание задач
+        Callable<Double> task1 = new MyThread("Task1", lowerLimit, half, step);
+        Callable<Double> task2 = new MyThread("Task2", half, upperLimit, step);
+        // Метод submit() передаёт задачу в ExecutorService для выполнения в одном из потоков пула
+        // и возвращает объект Future, с помощью которого можно потом получить результат.
+        // Отправка задач в ExecutorService
+        Future<Double> future1 = executor.submit(task1);
+        Future<Double> future2 = executor.submit(task2);
+        
+        try {
+            // Получение результатов
+            double result1 = future1.get();
+            double result2 = future2.get();
+
+            System.out.println("Result of Task1: " + result1);
+            System.out.println("Result of Task2: " + result2);
+
+            double summa = result1 + result2;
+            System.out.println("Result of Tasks: " + summa);
+
+            RecIntegral updatedRec = new RecIntegral(s_lowerLimit, s_upperLimit, s_step, Double.toString(summa));
+            model.setValueAt(summa, currentRow, 3);
+            list.set(currentRow, updatedRec);
+        } 
+        catch (InterruptedException | ExecutionException e) {
+            JOptionPane.showMessageDialog(lab1java.this, "Ошибка выполнения: " + e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+            Thread.currentThread().interrupt();
+        } 
+        catch (InvalidNumberException e) {
             JOptionPane.showMessageDialog(lab1java.this, "Ошибка: " + e.getMessage(), "Некорректные данные", JOptionPane.WARNING_MESSAGE);
+        } 
+        finally {
+            executor.shutdown();
         }
-               
     }//GEN-LAST:event_jButton3ActionPerformed
     
     // функция пока что не нужна вроде бы
@@ -547,7 +540,7 @@ public class lab1java extends javax.swing.JFrame {
                 model.setRowCount(0);  // очищаем таблицу
 
                 for (RecIntegral rec : list) {
-                    model.addRow(rec.ret());
+                model.addRow(rec.ret());
                 }
                 JOptionPane.showMessageDialog(this, "Файл успешно загружен!", "Загрузка", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -560,14 +553,13 @@ public class lab1java extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         // СОХРАНЕНИЕ ТЕКСТОВОГО ФАЙЛА
-        
         JFileChooser openDialog = new JFileChooser();
         openDialog.setDialogTitle("Сохранить как текстовый файл");
         // сделали фильтр, чтобы только txt файлы можно было открыть
         openDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
         //int result = openDialog.showOpenDialog(this);
         // если нажали open в диалоговом окне
-        if (openDialog.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
+        if (openDialog.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File file = openDialog.getSelectedFile();
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
                 for (RecIntegral rec : list){
@@ -603,59 +595,6 @@ public class lab1java extends javax.swing.JFrame {
             }
         } 
     }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-        // СОХРАНЕНИЕ ФАЙЛА JSON
-        
-        JFileChooser openDialog = new JFileChooser();
-        openDialog.setDialogTitle("Сохранить как JSON файл");
-        openDialog.setFileFilter(new FileNameExtensionFilter("JSON файл", "json"));
-
-        if (openDialog.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
-            File file = openDialog.getSelectedFile();
-
-            try (FileWriter writer = new FileWriter(file)) {
-                // Gson - библиотека для сериализаци объектов в формат JSON (и десериализации)
-                Gson gson = new Gson();
-                gson.toJson(list, writer);  // сериализуем весь список list в JSON
-                JOptionPane.showMessageDialog(this, "Файл успешно сохранен!", "Сохранение", JOptionPane.INFORMATION_MESSAGE);
-            } 
-            catch (IOException ex){
-                JOptionPane.showMessageDialog(this, "Ошибка при сохранении файла: " + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-            }
-        }   
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-        // ЗАГРУЗКА ФАЙЛА JSON
-        
-        JFileChooser openDialog = new JFileChooser();
-        openDialog.setDialogTitle("Открыть JSON файл");
-        openDialog.setFileFilter(new FileNameExtensionFilter("JSON файл", "json"));
-
-        if (openDialog.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = openDialog.getSelectedFile();
-
-            try (FileReader reader = new FileReader(file)) {
-                Gson gson = new Gson();
-                // Преобразуем json в список объектов RecIntegral
-                java.lang.reflect.Type listType = new TypeToken<LinkedList<RecIntegral>>(){}.getType();
-                list = gson.fromJson(reader, listType);
-
-                model.setRowCount(0);   // очищаем таблицу
-
-                for (RecIntegral rec : list) {
-                    model.addRow(rec.ret());
-                }
-                JOptionPane.showMessageDialog(this, "Файл успешно загружен!", "Загрузка", JOptionPane.INFORMATION_MESSAGE);
-            }
-            catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Ошибка при загрузке файла: " + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -695,8 +634,6 @@ public class lab1java extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
